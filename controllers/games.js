@@ -1,4 +1,4 @@
-import GamesService from "../services/games";
+import GamesService from "../services/games.js";
 
 function getGames(req, res) {
     GamesService.getGames(req.query)
@@ -52,17 +52,35 @@ function updateGame(req, res) {
         })
 }
 
+function deleteGame(req, res) {
+    const { idGame } = req.params;
+
+    GamesService.deleteGame(idGame)
+      .then(function (game) {
+        res.status(200).json(game);
+      })
+      .catch(function (err) {
+        if (err?.code) {
+          res.status(err.code).json({ err: err.msg });
+        } else {
+          res.status(500).json({ err: "No se pudo marcar como eliminado el juego." });
+        }
+      });
+}
+
 
 export {
     getGames,
     getGameById,
     createGame,
-    updateGame
+    updateGame,
+    deleteGame
 }
 
 export default {
     getGames,
     getGameById,
     createGame,
-    updateGame
+    updateGame,
+    deleteGame
 }

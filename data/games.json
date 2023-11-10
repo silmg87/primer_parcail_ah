@@ -1,0 +1,30 @@
+[
+    {
+      "name": "Juego 1",
+      "genre": "Aventura",
+      "members": ["Desarrollador 1", "Desarrollador 2"],
+      "edition": 2020,
+      "isDeleted": false
+    },
+    {
+      "name": "Juego 2",
+      "genre": "Estrategia",
+      "members": ["Desarrollador 3", "Desarrollador 4"],
+      "edition": 2021,
+      "isDeleted": false
+    },
+    {
+      "name": "Juego 3",
+      "genre": "Acción",
+      "members": ["Desarrollador 5", "Desarrollador 6"],
+      "edition": 2022,
+      "isDeleted": false
+    },
+    {
+      "name": "Juego 4",
+      "genre": "Puzzle",
+      "members": ["Desarrollador 7", "Desarrollador 8"],
+      "edition": 2023,
+      "isDeleted": false
+    }
+  ]
