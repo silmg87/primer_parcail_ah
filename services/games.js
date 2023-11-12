@@ -23,11 +23,11 @@ async function calculateTotalScoreForGame(game) {
     return totalScore;
 }
 
-async function processGamesWithVotes(games, isFilterByEdition) {
+async function processGamesWithVotes(games, filterByEdition) {
     const result = [];
   
     for (const game of games) {
-      if (isFilterByEdition) {
+      if (filterByEdition) {
         const totalScore = await calculateTotalScoreForGame(game);
         result.push({ ...game, total_score: totalScore });
       } else {
@@ -41,26 +41,26 @@ async function processGamesWithVotes(games, isFilterByEdition) {
 async function getGames(filter = {}) {
     await client.connect();
 
-    const isFilterByEdition = typeof filter['edition'] !== 'undefined' && filter['edition'] !== null;
-    const isFilterByGenre = typeof filter['genre'] !== 'undefined' && filter['genre'] !== null;
+    const filterByEdition = typeof filter['edition'] !== 'undefined' && filter['edition'] !== null;
+    const filterByGenre = typeof filter['genre'] !== 'undefined' && filter['genre'] !== null;
 
     let games;
 
-    if (isFilterByEdition) {
+    if (filterByEdition) {
         const filterMongo = filterQueryToMongo(filter);
         games = await GamesCollection.find(filterMongo).toArray();
     } else {
         games = await GamesCollection.find({ "isDeleted": false }).toArray();
     }
 
-    if (isFilterByGenre) {
+    if (filterByGenre) {
         games = games.filter(game => game.genre === filter.genre);
     }
 
-    const gamesWithVotes = await processGamesWithVotes(games, isFilterByEdition, isFilterByGenre);
-    const sortedGames = gamesWithVotes.sort((a, b) => b.total_score - a.total_score);
+    const gamesWithVotes = await processGamesWithVotes(games, filterByEdition, filterByGenre);
+    const orderedGames = gamesWithVotes.sort((a, b) => b.total_score - a.total_score);
 
-    return sortedGames;
+    return orderedGames;
 }
 
 async function getGameById(id) {
